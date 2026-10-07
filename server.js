@@ -58,7 +58,9 @@ const connectDB = async () => {
     console.warn('⚠️ Local MongoDB connection failed or timed out. Falling back to embedded MongoMemoryServer...');
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');
-      const mongoServer = await MongoMemoryServer.create();
+      const mongoServer = await MongoMemoryServer.create({
+        binary: { version: '7.0.3' }
+      });
       const inMemoryUri = mongoServer.getUri();
       await mongoose.connect(inMemoryUri);
       console.log(`✅ Connected to embedded MongoMemoryServer at: ${inMemoryUri}`);
